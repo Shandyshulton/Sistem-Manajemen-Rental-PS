@@ -150,7 +150,7 @@
             @if(session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            
+
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
@@ -160,15 +160,18 @@
                 <div class="mb-3">
                     <label class="fw-bold">Email</label>
                     <div class="input-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email*" required>
+                        <input type="email" name="email" class="form-control" placeholder="Email*" value="{{ old('email') }}" required autocomplete="email">
                         <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                     </div>
+                    @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary w-100 mt-3">Reset Password</button>
             </form>
 
             <div class="back-to-login mt-3">
-                <a href="{{ route('login') }}" class="text-decoration-none">Kembali ke Login</a>
+                <a href="{{ route('login') }}" class="text-decoration-none">Back to Login</a>
             </div>
         </div>
     </div>
@@ -176,8 +179,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let today = new Date();
-            let formattedDate = today.getDate().toString().padStart(2, '0') + '/' + 
-                                (today.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+            let formattedDate = today.getDate().toString().padStart(2, '0') + '/' +
+                                (today.getMonth() + 1).toString().padStart(2, '0') + '/' +
                                 today.getFullYear();
             document.getElementById("current-date").innerText = formattedDate;
         });

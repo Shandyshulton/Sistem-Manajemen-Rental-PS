@@ -55,7 +55,6 @@
         .image-container {
             display: flex;
             align-items: flex-end;
-            gap: 0px; /* Mengurangi jarak antar gambar */
         }
         .ps5-image {
             width: 350px;
@@ -64,7 +63,7 @@
         .ps4-image {
             width: 240px;
             height: 200px;
-            margin-left: -70px; /* Memindahkan PS4 lebih ke kiri */
+            margin-left: -70px;
         }
         .image-section h5 {
             font-weight: bold;
@@ -164,22 +163,27 @@
 
             <form method="POST" action="{{ route('reset.password.post') }}">
                 @csrf
+
+                <input type="hidden" name="token" value="{{ $token }}">
                 <input type="hidden" name="email" value="{{ $email }}">
 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Password Baru</label>
+                    <label class="form-label fw-bold">New Password</label>
                     <div class="input-group">
-                        <input type="password" id="password" name="password" class="form-control p-2" placeholder="Masukkan password baru" required>
+                        <input type="password" id="password" name="password" class="form-control p-2" placeholder="Enter your new password" required autocomplete="new-password">
                         <span class="input-group-text" onclick="togglePassword('password', 'togglePasswordIcon1')">
                             <i id="togglePasswordIcon1" class="fa fa-lock"></i>
                         </span>
                     </div>
+                    @error('password')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Konfirmasi Password</label>
+                    <label class="form-label fw-bold">Confirm Password</label>
                     <div class="input-group">
-                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control p-2" placeholder="Konfirmasi password baru" required>
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control p-2" placeholder="Confirm new password" required autocomplete="new-password">
                         <span class="input-group-text" onclick="togglePassword('password_confirmation', 'togglePasswordIcon2')">
                             <i id="togglePasswordIcon2" class="fa fa-lock"></i>
                         </span>
@@ -189,7 +193,7 @@
                 <button type="submit" class="btn btn-primary w-100 p-2 fw-bold">Reset Password</button>
 
                 <div class="back-to-login mt-3">
-                    <a href="{{ route('forgot.password') }}" class="text-decoration-none">Kembali ke Forgot</a>
+                    <a href="{{ route('forgot.password') }}" class="text-decoration-none">Go Back</a>
                 </div>
             </form>
         </div>
@@ -198,8 +202,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let today = new Date();
-            let formattedDate = today.getDate().toString().padStart(2, '0') + '/' + 
-                                (today.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+            let formattedDate = today.getDate().toString().padStart(2, '0') + '/' +
+                                (today.getMonth() + 1).toString().padStart(2, '0') + '/' +
                                 today.getFullYear();
             document.getElementById("current-date").innerText = formattedDate;
         });
